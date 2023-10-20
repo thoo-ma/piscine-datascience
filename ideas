@@ -1,13 +1,1 @@
-day00/ex02
-
-create an `EMPTY` table (otherwise anticipate to ex03 where you `FILL` the table)
-__________
-
-day00/ex04
-
-Why 3 new types ?...
-
-Subject: You have to create at least 3 data types `in the table`
-Postgresql (https://www.postgresql.org/docs/current/sql-createtype.html): CREATE TYPE registers a new data type for use `in the current database`
---> so replace `in the table` by `in the database`
-__________
+https://datalore.jetbrains.com/report/static/0k5R4AZgfYFgpwZkcb3f7G/F4dVZDGdekdgiJ8PKPUQ4w

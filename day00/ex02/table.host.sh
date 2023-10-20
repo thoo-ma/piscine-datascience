@@ -10,12 +10,19 @@ csv=(
 )
 
 for csv in ${csv[@]}
-do docker cp ${csv} ${container}:${src_dest}
+  do
+  # remove duplicate lines
+  uniq <(sort ${csv}) > /tmo/foo
+  cat /tmp/foo > ${csv}
+  # copy csv from host to container
+  docker cp ${csv} ${container}:${src_dest}
 done
 
-docker cp day00/ex02/table.container.sh ${container}:${src_dest}
-docker exec ${container} bash ${src_dest}table.container.sh
+# old
+# docker cp day00/ex02/table.container.sh ${container}:${src_dest}
+# docker exec ${container} bash ${src_dest}table.container.sh
 
+# new
 # script=day00/ex02/table.container.sh
 # docker cp ${script} ${container}:/tmp
 # docker exec ${container} bash /tmp/$(basename ${script})
