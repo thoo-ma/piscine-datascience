@@ -9,8 +9,9 @@ services:
             POSTGRES_PASSWORD: mysecretpassword
             POSTGRES_DB: piscineds
             POSTGRES_USER: trobin
-        expose:
-          - '5432'
+        # expose:
+        ports:
+          - '5432:5432'
 
     pgadmin:
         image: dpage/pgadmin4

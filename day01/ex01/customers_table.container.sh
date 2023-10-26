@@ -1,4 +1,4 @@
-#!//bin/bash
+#!/bin/bash
 
 tables=(
   'data_2022_oct'
