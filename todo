@@ -1,5 +1,14 @@
+DAY00
+_____
 ex02: create an `EMPTY` table (otherwise anticipate to ex03 where you `FILL` the table)
 ex04: why create three new data types ?...
 (Subject: You have to create at least 3 data types `in the table`
 Postgresql (https://www.postgresql.org/docs/current/sql-createtype.html): CREATE TYPE registers a new data type for use `in the current database`
 --> so replace `in the table` by `in the database`)
+
+ALL
+___
+- use env for all scripts
+- psql mandatory password
+  --> cf. /var/lib/postgresql/data/pg_hba.conf
+  --> `SELECT pg_reload_conf();` as postgres super-user (here `trobin`)
