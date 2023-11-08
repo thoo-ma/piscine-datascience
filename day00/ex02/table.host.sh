@@ -1,10 +1,10 @@
 #!/bin/bash
 
 csv=(
-  'day00/data/customer/data_2022_oct.csv'
-  'day00/data/customer/data_2022_nov.csv'
-  'day00/data/customer/data_2022_dec.csv'
-  'day00/data/customer/data_2023_jan.csv'
+  '/sgoinfre/goinfre/Perso/trobin/piscine-datascience/subject/customer/data_2022_oct.csv'
+  '/sgoinfre/goinfre/Perso/trobin/piscine-datascience/subject/customer/data_2022_nov.csv'
+  '/sgoinfre/goinfre/Perso/trobin/piscine-datascience/subject/customer/data_2022_dec.csv'
+  '/sgoinfre/goinfre/Perso/trobin/piscine-datascience/subject/customer/data_2023_jan.csv'
 )
 container=piscine-datascience-db-1
 script=day00/ex02/table.container.sh

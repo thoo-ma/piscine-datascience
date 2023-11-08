@@ -11,6 +11,8 @@ services:
             POSTGRES_USER: $POSTGRES_USER
         ports:
           - '5432:5432'
+        volumes:
+            - db_data:/var/lib/postgres/data
 
     pgadmin:
         image: dpage/pgadmin4
@@ -24,3 +26,11 @@ services:
             - 5050:80
         expose:
           - '5432'
+
+volumes:
+    db_data:
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: /sgoinfre/goinfre/Perso/trobin/piscine-datascience/db_data
