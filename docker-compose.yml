@@ -6,10 +6,9 @@ services:
         image: postgres
         restart: always
         environment:
-            POSTGRES_PASSWORD: mysecretpassword
-            POSTGRES_DB: piscineds
-            POSTGRES_USER: trobin
-        # expose:
+            POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+            POSTGRES_DB: $POSTGRES_DB
+            POSTGRES_USER: $POSTGRES_USER
         ports:
           - '5432:5432'
 
@@ -17,8 +16,8 @@ services:
         image: dpage/pgadmin4
         restart: always
         environment:
-            PGADMIN_DEFAULT_EMAIL: trobin@student.42.fr
-            PGADMIN_DEFAULT_PASSWORD: mysecretpassword
+            PGADMIN_DEFAULT_EMAIL: $PGADMIN_DEFAULT_EMAIL
+            PGADMIN_DEFAULT_PASSWORD: $PGADMIN_DEFAULT_PASSWORD
         depends_on:
             - "db"
         ports:
