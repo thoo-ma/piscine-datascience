@@ -20,15 +20,19 @@ psql -U trobin piscineds << END
   );
 END
 
+# Otherwise `ERROR:  invalid byte sequence for encoding "UTF8": 0x00` from psql
+# File size dramaticcaly reduced but no line were deleted! O.O
+tr -d '\000' < /tmp/data_2023_feb.csv > /tmp/new_data_2023_feb.csv
+
 # Fill table
   psql -U trobin piscineds << END
   COPY ${tables[4]}(event_time, event_type, product_id, price, user_id, user_session)
-  FROM '/tmp/data_2023_feb.csv'
+  FROM '/tmp/new_data_2023_feb.csv'
   DELIMITER ','
   CSV HEADER;
 END
 
-# Union tables
+# Union tables (remove duplicates)
 psql -U trobin piscineds << END
   CREATE TABLE customers
   AS
