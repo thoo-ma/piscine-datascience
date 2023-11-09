@@ -4,4 +4,6 @@ db:		;	docker compose --file docker-compose.yml up --detach db
 
 it:		;	docker compose --file docker-compose.yml exec db bash
 
-.PHONY: all db it
+down:	;	docker compose --file docker-compose.yml down
+
+.PHONY: all db it down
