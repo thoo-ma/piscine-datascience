@@ -1,6 +1,8 @@
 import sqlalchemy
 import pandas as pd
 
+# TODO USELESS (cf. day01/ex01/)
+
 tables = [
     'data_2022_oct',
     'data_2022_nov',
@@ -18,27 +20,25 @@ with engine.connect() as connection:
     # df = pd.concat(dfs)
     # print(df.shape)
 
+    total_before = 0
+    total_after = 0
     for table in tables:
         df = pd.read_sql_table(table, connection, parse_dates=['event_time'])
-        print(table, df.shape)
+        print(f'== {table} ==')
+        print(f'before: {df.shape[0]} rows')
+        total_before += df.shape[0]
+        df.drop_duplicates(inplace=True)
+        total_after += df.shape[0]
+        print(f'after:  {df.shape[0]} rows')
 
-    # df = pd.read_sql_table('customers', connection, parse_dates=['event_time'])
-    # print(df.head())
-    # print(df.shape)
+    print(f'== total ==')
+    print(f'before: {total_before}')
+    print(f'after:  {total_after}')
 
-    # df.drop_duplicates(inplace=True)
-    # print(df.head())
-    # print(df.shape)
+    df = pd.read_sql_table('customers', connection, parse_dates=['event_time'])
+    print(f'== customers ==')
+    print(f'before: {df.shape[0]} rows')
+    df.drop_duplicates(inplace=True)
+    print(f'after:  {df.shape[0]} rows')
 
-    # labels, sizes = np.unique(df, return_counts=True)
-    # print(labels)
-    # print(sizes)
-
-    # _sum = sum(sizes)
-    # _sizes = [s / _sum * 100 for s in sizes]
-    # print(_sizes)
-
-    # plt.pie(_sizes, labels=labels, autopct='%.1f%%')
-    # # plt.show()
-    # plt.savefig('./day02/ex00/pie.png')
 

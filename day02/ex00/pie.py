@@ -8,7 +8,7 @@ engine = sqlalchemy.create_engine("postgresql://trobin:mysecretpassword@localhos
 with engine.connect() as connection:
 
     df = pd.read_sql_table('customers', connection, columns=['event_type'])
-    print(df)
+    print(df.head())
 
     labels, sizes = np.unique(df, return_counts=True)
     print(labels)
@@ -19,5 +19,4 @@ with engine.connect() as connection:
     print(_sizes)
 
     plt.pie(_sizes, labels=labels, autopct='%.1f%%')
-    # plt.show()
-    plt.savefig('./day02/ex00/pie.png')
+    plt.show()

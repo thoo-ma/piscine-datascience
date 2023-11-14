@@ -51,6 +51,7 @@ with engine.connect() as connection:
     # print('fill table data_2023_feb')
 
     # Join tables
+    # Alternative 1: raw SQL UNION (remove duplicates)
     stmt = sqlalchemy.text("""
         CREATE TABLE customers
         AS
@@ -67,3 +68,26 @@ with engine.connect() as connection:
     connection.execute(stmt)
     connection.commit()
     print('create table customers')
+
+    # TODO
+    # Alternative 2: SQLAlchemy (doesn't remove duplicates ?)
+    # tables = [
+    #     'data_2022_oct',
+    #     'data_2022_nov',
+    #     'data_2022_dec',
+    #     'data_2023_jan',
+    #     'data_2023_feb'
+    # ]
+    # df = pd.DataFrame()
+    # for table in tables:
+    #     _df = pd.read_sql_table(table, connection, parse_dates=['event_time'])
+    #     df = pd.concat([df, _df])
+    #     print(df.shape)
+    # try:
+    #     df.to_sql(name='customers', con=connection, if_exists='append', index=False)
+    # except Exception as e:
+    #     print(e)
+    # dfs = [pd.read_sql_table(table, connection, parse_dates=['event_time']) for table in tables]
+    # map(lambda df: print(df.shape), dfs)
+    # df = pd.concat(dfs)
+    # print(df.shape)
