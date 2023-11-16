@@ -1,12 +1,14 @@
 import sqlalchemy
 import pandas as pd
-import os
 
 
 csv = '/sgoinfre/goinfre/Perso/trobin/piscine-datascience/subject/item/item.csv'
 
+# Step 1: open csv
 try:
     df = pd.read_csv(csv, on_bad_lines='warn')
+    # NOTE Same rationale for droping duplicates than previous exercise.
+    df.drop_duplicates(inplace=True)
 except Exception as e:
     print(e)
     exit()
@@ -15,6 +17,7 @@ engine = sqlalchemy.create_engine("postgresql://trobin:mysecretpassword@localhos
 
 with engine.connect() as connection:
 
+    # Step 2: create table
     table = 'items'
     stmt = sqlalchemy.text(f"""
         CREATE TABLE {table} (
@@ -25,4 +28,5 @@ with engine.connect() as connection:
     connection.execute(stmt)
     connection.commit()
 
+    # Step 3: fill table
     df.to_sql(name=table, con=connection, if_exists='append', index=False)

@@ -19,6 +19,8 @@ with engine.connect() as connection:
         try:
             df = pd.read_csv(csv, on_bad_lines='warn', parse_dates=['event_time'])
             print(f'open {csv}')
+            # NOTE Same rationale for droping duplicates than previous exercise.
+            df.drop_duplicates(inplace=True)
         except Exception as e:
             print(e)
             continue
