@@ -42,7 +42,8 @@ def alternative_one(connection):
 def alternative_two(connection, tables):
 
     # Create `customers` table with the same columns as `data_2022_oct`.
-    # The former is taken arbitratly within all `data_*` tables.
+    # The former is taken arbitratly within all `data_*` tables
+    # (we suppose they all have commum column names and types.)
     stmt = sqlalchemy.text("CREATE TABLE customers AS SELECT * FROM data_2022_oct WHERE FALSE;")
     connection.execute(stmt)
     connection.commit()
@@ -58,23 +59,23 @@ def alternative_two(connection, tables):
         print(f'copied {rows} rows from {table} to customers')
 
 
-# NOTE Doesn't remove duplicates
+# NOTE Does not remove duplicates
 def alternative_three(connection, tables):
 
-        # NOTE This for loop gets killed.
-        # Kernel seems to go out of memory.
-        df = pd.DataFrame()
-        for table in tables:
-            _df = pd.read_sql_table(table, connection, parse_dates=['event_time'])
-            df = pd.concat([df, _df], ignore_index=True)
+    # Create `customers` table with the same columns as `data_2022_oct`.
+    # The former is taken arbitratly within all `data_*` tables
+    # (we suppose they all have commum column names and types.)
+    # Just to be sure we preserve types integrity from `data_` tables to `customers` tables.
+    stmt = sqlalchemy.text("CREATE TABLE customers AS SELECT * FROM data_2022_oct WHERE FALSE;")
+    connection.execute(stmt)
+    connection.commit()
+    print('create table customers')
 
-        # NOTE Obviously more elegant than the for loop above.
-        # But is the former gets killed imagine this...
-        # dfs = [pd.read_sql_table(table, connection, parse_dates=['event_time']) for table in tables]
-        # df = pd.concat(dfs)
-
+    # Generators FTW
+    for table, df in ((table, pd.read_sql_table(table, connection, parse_dates=['event_time'])) for table in tables):
         try:
             df.to_sql(name='customers', con=connection, if_exists='append', index=False)
+            print(f'copied {df.shape[0]} rows from {table} to customers')
         except Exception as e:
             print(e)
 
@@ -84,9 +85,8 @@ def main():
     # Step 1: open csv
     try:
         df = pd.read_csv(csv, on_bad_lines='warn', parse_dates=['event_time'])
-        print(df.tail())
-        print(df.shape)
-        df.drop_duplicates(inplace=True) # not asked by the subject
+        # NOTE Same rationale for droping duplicates than previous exercises.
+        df.drop_duplicates(inplace=True)
     except Exception as e:
         print(e)
         exit()
@@ -112,17 +112,17 @@ def main():
         df.to_sql(name='data_2023_feb', con=connection, if_exists='append', index=False)
         print('fill table data_2023_feb')
 
-        # tables = [
-        #     'data_2022_oct',
-        #     'data_2022_nov',
-        #     'data_2022_dec',
-        #     'data_2023_jan',
-        #     'data_2023_feb'
-        # ]
-
         # Step 4: join tables
-        alternative_one(connection)
-        # alternative_two(connection, tables)
+        tables = [
+            'data_2022_oct',
+            'data_2022_nov',
+            'data_2022_dec',
+            'data_2023_jan',
+            'data_2023_feb'
+        ]
+
+        # alternative_one(connection)
+        alternative_two(connection, tables)
         # alternative_three(connection, tables)
 
 
