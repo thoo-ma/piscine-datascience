@@ -7,8 +7,12 @@ csv = '/sgoinfre/goinfre/Perso/trobin/piscine-datascience/subject/item/item.csv'
 # Step 1: open csv
 try:
     df = pd.read_csv(csv, on_bad_lines='warn')
+    print(df.shape)
     # NOTE Same rationale for droping duplicates than previous exercise.
-    df.drop_duplicates(inplace=True)
+    # However, remove duplicates here is more tricky.
+    # See `test/duplicates.ipynb` for more explanations.
+    df = df.groupby('product_id', as_index=False).first()
+    print(df.shape)
 except Exception as e:
     print(e)
     exit()

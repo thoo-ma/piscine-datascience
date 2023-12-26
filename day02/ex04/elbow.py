@@ -14,6 +14,13 @@ from sklearn.datasets import make_blobs
 # - the number of time they ordered
 # - etc.
 # Sounds we should arbitrary choose one of these metric to clusterize users.
+# Moreover, it doesn't specify in which dimensions the clusters elements lives.
+# Examples we ave above are one dimension spaces. But forbusiness logic,
+# two or more dimensions might be relevant.
+# More than being vague, the subject could be qualified as nonsensical.
+# Indeed, depending on what data we looking at, the optimal number of clusters
+# might vary. Hence, as the subject seems to insinuate to the beginner in the
+# field we are, there is no generic 'optimal number of clusters to make'.
 
 engine = sqlalchemy.create_engine("postgresql://trobin:mysecretpassword@localhost:5432/piscineds")
 with engine.connect() as connection:

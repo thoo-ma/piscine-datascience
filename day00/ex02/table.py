@@ -12,8 +12,8 @@ try:
     # NOTE This is not asked by the subject.
     # (Even more, this is not recommended since we asked to remove duplicates
     # once all data_ tables have been merged into the customers one.)
-    # We do it anyway because there is so much lines and compute
-    # all those useless duplicated would be -- and has been -- very painful.
+    # We do it anyway because there is so much lines, and compute all
+    # those useless duplicated would be -- and has been -- very painful.
     # Even less painful, would be to remove duplicates from the file
     # directly, avoiding loading duplicated lines into the DataFrame.
     # GNU `sort` and `uniq` would do the trick.

@@ -60,6 +60,7 @@ def alternative_two(connection, tables):
 
 
 # NOTE Does not remove duplicates
+# Take SO MUCH TIME
 def alternative_three(connection, tables):
 
     # Create `customers` table with the same columns as `data_2022_oct`.
@@ -73,11 +74,8 @@ def alternative_three(connection, tables):
 
     # Generators FTW
     for table, df in ((table, pd.read_sql_table(table, connection, parse_dates=['event_time'])) for table in tables):
-        try:
-            df.to_sql(name='customers', con=connection, if_exists='append', index=False)
-            print(f'copied {df.shape[0]} rows from {table} to customers')
-        except Exception as e:
-            print(e)
+        df.to_sql(name='customers', con=connection, if_exists='append', index=False)
+        print(f'copied {df.shape[0]} rows from {table} to customers')
 
 
 def main():
