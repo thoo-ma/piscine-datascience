@@ -2,13 +2,13 @@ import sqlalchemy
 import pandas as pd
 
 
-csv = '/sgoinfre/goinfre/Perso/trobin/piscine-datascience/subject/item/item.csv'
+csv = '/home/youngbenjaminhorne/42/piscine-datascience/subject/item/item.csv'
 
 # Step 1: open csv
 try:
     df = pd.read_csv(csv, on_bad_lines='warn')
     print(df.shape)
-    # NOTE Same rationale for droping duplicates than previous exercise.
+    # NOTE: Same rationale for droping duplicates than previous exercise.
     # However, remove duplicates here is more tricky.
     # See `test/duplicates.ipynb` for more explanations.
     df = df.groupby('product_id', as_index=False).first()
@@ -23,13 +23,13 @@ with engine.connect() as connection:
 
     # Step 2: create table
     table = 'items'
-    stmt = sqlalchemy.text(f"""
+    statement = sqlalchemy.text(f"""
         CREATE TABLE {table} (
         product_id INTEGER,
         category_id BIGINT,
         category_code VARCHAR(50),
         brand VARCHAR(50));""")
-    connection.execute(stmt)
+    connection.execute(statement)
     connection.commit()
 
     # Step 3: fill table
